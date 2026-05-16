@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big D Soccer · Lineup Builder</title>
+<style>
+  :root {
+    --navy: #002B5C;
+    --red: #C8102E;
+    --light: #f4f7fb;
+    --border: #d0d9e8;
+    --text: #1a2a3a;
+    --muted: #6b7f96;
+    --success: #16a34a;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: ‘Georgia’, serif;
+background: var(–light);
+color: var(–text);
+min-height: 100vh;
+padding: 24px 16px 60px;
+}
+
+header {
+text-align: center;
+margin-bottom: 32px;
+}
+
+header .logo {
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: var(–red);
+margin-bottom: 6px;
+}
+
+header h1 {
+font-size: 26px;
+color: var(–navy);
+font-weight: 700;
+letter-spacing: -0.5px;
+}
+
+header p {
+font-size: 13px;
+color: var(–muted);
+margin-top: 4px;
+font-style: italic;
+}
+
+.card {
+background: #fff;
+border: 1.5px solid var(–border);
+border-radius: 16px;
+padding: 24px;
+margin-bottom: 20px;
+max-width: 680px;
+margin-left: auto;
+margin-right: auto;
+}
+
+.card-title {
+font-size: 13px;
+font-weight: 700;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–red);
+margin-bottom: 18px;
+padding-bottom: 10px;
+border-bottom: 1px solid var(–border);
+}
+
+.field-row {
+display: grid;
+gap: 12px;
+margin-bottom: 12px;
+}
+
+.field-row.cols-1 { grid-template-columns: 1fr; }
+.field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+.field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.field-row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+.field-group {
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
+
+label {
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–muted);
+}
+
+input[type=“text”], select {
+width: 100%;
+padding: 9px 12px;
+border: 1.5px solid var(–border);
+border-radius: 8px;
+font-size: 14px;
+font-family: inherit;
+color: var(–text);
+background: #fafbfd;
+transition: border-color .15s;
+-webkit-appearance: none;
+}
+
+input[type=“text”]:focus, select:focus {
+outline: none;
+border-color: var(–navy);
+background: #fff;
+}
+
+.section-divider {
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–navy);
+margin: 20px 0 12px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.section-divider::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–border);
+}
+
+.formation-section { display: none; }
+.formation-section.active { display: block; }
+
+.captain-toggle {
+display: flex;
+align-items: center;
+gap: 6px;
+margin-top: 3px;
+}
+
+.captain-toggle input[type=“checkbox”] {
+width: 15px;
+height: 15px;
+accent-color: var(–red);
+cursor: pointer;
+flex-shrink: 0;
+}
+
+.captain-toggle label {
+font-size: 10px;
+color: var(–muted);
+cursor: pointer;
+letter-spacing: .5px;
+text-transform: none;
+font-weight: 600;
+}
+
+.bench-row {
+display: grid;
+grid-template-columns: 1fr 72px;
+gap: 10px;
+align-items: end;
+margin-bottom: 10px;
+}
+
+.btn-generate {
+display: block;
+width: 100%;
+max-width: 680px;
+margin: 0 auto 20px;
+padding: 16px;
+background: var(–navy);
+color: #fff;
+font-size: 14px;
+font-weight: 700;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+border: none;
+border-radius: 12px;
+cursor: pointer;
+transition: background .15s;
+}
+
+.btn-generate:hover { background: #003a7a; }
+.btn-generate:active { background: #001f45; }
+
+.output-section {
+max-width: 680px;
+margin: 0 auto;
+display: none;
+}
+
+.output-block {
+background: #fff;
+border: 1.5px solid var(–border);
+border-radius: 16px;
+padding: 20px;
+margin-bottom: 16px;
+}
+
+.output-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 12px;
+}
+
+.output-label {
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–navy);
+}
+
+.btn-copy {
+padding: 7px 16px;
+background: var(–red);
+color: #fff;
+border: none;
+border-radius: 8px;
+font-size: 12px;
+font-weight: 700;
+letter-spacing: .5px;
+cursor: pointer;
+transition: background .15s, transform .1s;
+}
+
+.btn-copy:hover { background: #a50d26; }
+.btn-copy:active { transform: scale(.97); }
+.btn-copy.copied { background: var(–success); }
+
+textarea.code-output {
+width: 100%;
+height: 160px;
+font-family: ‘Menlo’, ‘Monaco’, monospace;
+font-size: 11px;
+line-height: 1.5;
+color: #334155;
+background: #f8fafc;
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 12px;
+resize: vertical;
+-webkit-appearance: none;
+}
+
+.success-banner {
+background: #f0fdf4;
+border: 1.5px solid #86efac;
+border-radius: 10px;
+padding: 12px 16px;
+font-size: 13px;
+color: var(–success);
+font-weight: 600;
+text-align: center;
+margin-bottom: 16px;
+display: none;
+}
+
+@media (max-width: 520px) {
+.field-row.cols-4 { grid-template-columns: 1fr 1fr; }
+.field-row.cols-3 { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="logo">Big D Soccer</div>
+  <h1>Lineup Builder</h1>
+  <p>Fill out the form · copy the HTML · paste into Ghost</p>
+</header>
+
+<!-- MATCH INFO -->
+
+<div class="card">
+  <div class="card-title">Match Info</div>
+  <div class="field-row cols-2">
+    <div class="field-group">
+      <label>Formation</label>
+      <select id="formation" onchange="switchFormation(this.value)">
+        <option value="3412">3-4-1-2</option>
+        <option value="343">3-4-3</option>
+        <option value="442">4-4-2</option>
+        <option value="4231">4-2-3-1</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label>Status Line</label>
+      <input type="text" id="status" value="Projected lineup · subject to change">
+    </div>
+  </div>
+</div>
+
+<!-- STARTING XI -->
+
+<div class="card">
+  <div class="card-title">Starting XI</div>
+
+  <!-- ═══ 3-4-1-2 ═══ -->
+
+  <div class="formation-section active" id="f-3412">
+    <div class="section-divider">Strikers</div>
+    <div class="field-row cols-2">
+      <div class="field-group"><label>ST Left</label><input type="text" id="3412-st1" placeholder="Musa"></div>
+      <div class="field-group"><label>ST Right</label><input type="text" id="3412-st2" placeholder="Farrington"></div>
+    </div>
+    <div class="section-divider">Attacking Mid</div>
+    <div class="field-row cols-1">
+      <div class="field-group"><label>CAM</label><input type="text" id="3412-cam" placeholder="Cappis"></div>
+    </div>
+    <div class="section-divider">Midfield</div>
+    <div class="field-row cols-4">
+      <div class="field-group"><label>LWB</label><input type="text" id="3412-lwb" placeholder="Binyamin"></div>
+      <div class="field-group">
+        <label>CM Left</label>
+        <input type="text" id="3412-cm1" placeholder="Kaick">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="3412-cm1-cap"><label for="3412-cm1-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>CM Right</label>
+        <input type="text" id="3412-cm2" placeholder="Ramiro">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="3412-cm2-cap"><label for="3412-cm2-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>RWB</label>
+        <input type="text" id="3412-rwb" placeholder="Moore">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="3412-rwb-cap"><label for="3412-rwb-cap">Captain</label></div>
+      </div>
+    </div>
+    <div class="section-divider">Defense</div>
+    <div class="field-row cols-3">
+      <div class="field-group"><label>LCB</label><input type="text" id="3412-lcb" placeholder="Norris"></div>
+      <div class="field-group">
+        <label>CB</label>
+        <input type="text" id="3412-cb" placeholder="Urhoghide">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="3412-cb-cap"><label for="3412-cb-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>RCB</label>
+        <input type="text" id="3412-rcb" placeholder="Ibeagha">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="3412-rcb-cap"><label for="3412-rcb-cap">Captain</label></div>
+      </div>
+    </div>
+    <div class="section-divider">Goalkeeper</div>
+    <div class="field-row cols-1">
+      <div class="field-group"><label>GK</label><input type="text" id="3412-gk" placeholder="Collodi"></div>
+    </div>
+  </div>
+
+  <!-- ═══ 3-4-3 ═══ -->
+
+  <div class="formation-section" id="f-343">
+    <div class="section-divider">Attack</div>
+    <div class="field-row cols-3">
+      <div class="field-group"><label>LW</label><input type="text" id="343-lw" placeholder=""></div>
+      <div class="field-group"><label>ST</label><input type="text" id="343-st" placeholder="Musa"></div>
+      <div class="field-group"><label>RW</label><input type="text" id="343-rw" placeholder=""></div>
+    </div>
+    <div class="section-divider">Midfield</div>
+    <div class="field-row cols-4">
+      <div class="field-group"><label>LWB</label><input type="text" id="343-lwb" placeholder="Binyamin"></div>
+      <div class="field-group">
+        <label>CM Left</label>
+        <input type="text" id="343-cm1" placeholder="Kaick">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="343-cm1-cap"><label for="343-cm1-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>CM Right</label>
+        <input type="text" id="343-cm2" placeholder="Ramiro">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="343-cm2-cap"><label for="343-cm2-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>RWB</label>
+        <input type="text" id="343-rwb" placeholder="Moore">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="343-rwb-cap"><label for="343-rwb-cap">Captain</label></div>
+      </div>
+    </div>
+    <div class="section-divider">Defense</div>
+    <div class="field-row cols-3">
+      <div class="field-group"><label>LCB</label><input type="text" id="343-lcb" placeholder="Norris"></div>
+      <div class="field-group">
+        <label>CB</label>
+        <input type="text" id="343-cb" placeholder="Urhoghide">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="343-cb-cap"><label for="343-cb-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>RCB</label>
+        <input type="text" id="343-rcb" placeholder="Ibeagha">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="343-rcb-cap"><label for="343-rcb-cap">Captain</label></div>
+      </div>
+    </div>
+    <div class="section-divider">Goalkeeper</div>
+    <div class="field-row cols-1">
+      <div class="field-group"><label>GK</label><input type="text" id="343-gk" placeholder="Collodi"></div>
+    </div>
+  </div>
+
+  <!-- ═══ 4-4-2 ═══ -->
+
+  <div class="formation-section" id="f-442">
+    <div class="section-divider">Strikers</div>
+    <div class="field-row cols-2">
+      <div class="field-group"><label>ST Left</label><input type="text" id="442-st1" placeholder="Musa"></div>
+      <div class="field-group"><label>ST Right</label><input type="text" id="442-st2" placeholder="Farrington"></div>
+    </div>
+    <div class="section-divider">Midfield</div>
+    <div class="field-row cols-4">
+      <div class="field-group"><label>LM</label><input type="text" id="442-lm" placeholder=""></div>
+      <div class="field-group">
+        <label>CM Left</label>
+        <input type="text" id="442-cm1" placeholder="Kaick">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="442-cm1-cap"><label for="442-cm1-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>CM Right</label>
+        <input type="text" id="442-cm2" placeholder="Ramiro">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="442-cm2-cap"><label for="442-cm2-cap">Captain</label></div>
+      </div>
+      <div class="field-group"><label>RM</label><input type="text" id="442-rm" placeholder=""></div>
+    </div>
+    <div class="section-divider">Defense</div>
+    <div class="field-row cols-4">
+      <div class="field-group"><label>LB</label><input type="text" id="442-lb" placeholder=""></div>
+      <div class="field-group">
+        <label>LCB</label>
+        <input type="text" id="442-lcb" placeholder="Norris">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="442-lcb-cap"><label for="442-lcb-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>RCB</label>
+        <input type="text" id="442-rcb" placeholder="Urhoghide">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="442-rcb-cap"><label for="442-rcb-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>RB</label>
+        <input type="text" id="442-rb" placeholder="Moore">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="442-rb-cap"><label for="442-rb-cap">Captain</label></div>
+      </div>
+    </div>
+    <div class="section-divider">Goalkeeper</div>
+    <div class="field-row cols-1">
+      <div class="field-group"><label>GK</label><input type="text" id="442-gk" placeholder="Collodi"></div>
+    </div>
+  </div>
+
+  <!-- ═══ 4-2-3-1 ═══ -->
+
+  <div class="formation-section" id="f-4231">
+    <div class="section-divider">Striker</div>
+    <div class="field-row cols-1">
+      <div class="field-group"><label>ST</label><input type="text" id="4231-st" placeholder="Musa"></div>
+    </div>
+    <div class="section-divider">Attacking Three</div>
+    <div class="field-row cols-3">
+      <div class="field-group"><label>LAM</label><input type="text" id="4231-lam" placeholder=""></div>
+      <div class="field-group"><label>CAM</label><input type="text" id="4231-cam" placeholder="Cappis"></div>
+      <div class="field-group"><label>RAM</label><input type="text" id="4231-ram" placeholder=""></div>
+    </div>
+    <div class="section-divider">Double Pivot</div>
+    <div class="field-row cols-2">
+      <div class="field-group">
+        <label>DM Left</label>
+        <input type="text" id="4231-dm1" placeholder="Kaick">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="4231-dm1-cap"><label for="4231-dm1-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>DM Right</label>
+        <input type="text" id="4231-dm2" placeholder="Ramiro">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="4231-dm2-cap"><label for="4231-dm2-cap">Captain</label></div>
+      </div>
+    </div>
+    <div class="section-divider">Defense</div>
+    <div class="field-row cols-4">
+      <div class="field-group"><label>LB</label><input type="text" id="4231-lb" placeholder="Binyamin"></div>
+      <div class="field-group">
+        <label>LCB</label>
+        <input type="text" id="4231-lcb" placeholder="Norris">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="4231-lcb-cap"><label for="4231-lcb-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>RCB</label>
+        <input type="text" id="4231-rcb" placeholder="Urhoghide">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="4231-rcb-cap"><label for="4231-rcb-cap">Captain</label></div>
+      </div>
+      <div class="field-group">
+        <label>RB</label>
+        <input type="text" id="4231-rb" placeholder="Moore">
+        <div class="captain-toggle"><input type="checkbox" class="cap-check" id="4231-rb-cap"><label for="4231-rb-cap">Captain</label></div>
+      </div>
+    </div>
+    <div class="section-divider">Goalkeeper</div>
+    <div class="field-row cols-1">
+      <div class="field-group"><label>GK</label><input type="text" id="4231-gk" placeholder="Collodi"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BENCH -->
+
+<div class="card">
+  <div class="card-title">Bench (up to 9)</div>
+  <div id="bench-rows"></div>
+</div>
+
+<button class="btn-generate" onclick="generate()">Generate HTML Cards</button>
+
+<div class="success-banner" id="success-banner">✓ HTML generated — copy each block and paste into Ghost HTML cards</div>
+
+<div class="output-section" id="output-section">
+  <div class="output-block">
+    <div class="output-header">
+      <span class="output-label">Starting XI Card</span>
+      <button class="btn-copy" onclick="copyBlock('lineup-output', this)">Copy HTML</button>
+    </div>
+    <textarea class="code-output" id="lineup-output" readonly></textarea>
+  </div>
+  <div class="output-block">
+    <div class="output-header">
+      <span class="output-label">Bench Card</span>
+      <button class="btn-copy" onclick="copyBlock('bench-output', this)">Copy HTML</button>
+    </div>
+    <textarea class="code-output" id="bench-output" readonly></textarea>
+  </div>
+</div>
+
+<script>
+  // ── Bench setup ──────────────────────────────────────────────
+  const BENCH_SLOTS = [
+    { id:'b1', def:'GK' }, { id:'b2', def:'DF' }, { id:'b3', def:'DF' },
+    { id:'b4', def:'DF' }, { id:'b5', def:'MF' }, { id:'b6', def:'MF' },
+    { id:'b7', def:'MF' }, { id:'b8', def:'FW' }, { id:'b9', def:'FW' },
+  ];
+  const POS_OPTS = ['GK','DF','MF','FW'];
+
+  const benchContainer = document.getElementById('bench-rows');
+  BENCH_SLOTS.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'bench-row';
+    row.innerHTML = `
+      <div class="field-group">
+        <label>Player ${i+1}</label>
+        <input type="text" id="${p.id}" placeholder="Name (leave blank to skip)">
+      </div>
+      <div class="field-group">
+        <label>Pos</label>
+        <select id="${p.id}_pos">
+          ${POS_OPTS.map(o => `<option value="${o}"${o===p.def?' selected':''}>${o}</option>`).join('')}
+        </select>
+      </div>`;
+    benchContainer.appendChild(row);
+  });
+
+  // ── Formation switcher ────────────────────────────────────────
+  function switchFormation(val) {
+    document.querySelectorAll('.formation-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('f-' + val).classList.add('active');
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────
+  function v(id) { return (document.getElementById(id)?.value || '').trim(); }
+
+  function isCap(id) { return document.getElementById(id)?.checked || false; }
+
+  function capBadge() {
+    return `<span style="display:inline-block;width:16px;height:16px;background:#C8102E;color:#fff;border-radius:50%;font-size:9px;font-weight:800;text-align:center;line-height:16px;vertical-align:middle;margin-right:3px;border:1.5px solid #002B5C;">C</span>`;
+  }
+
+  function pill(pos, name, type, cap) {
+    const styles = {
+      attack: 'background:#fff;border:2px solid #C8102E;',
+      cam:    'background:#fff5f7;border:2px solid #E31837;',
+      mid:    'background:#fff;border:2px solid #002B5C;',
+      def:    'background:#f0f4f9;border:2px solid #002B5C;',
+      gk:     'background:#f2f2f2;border:2px solid #444;color:#333;',
+    };
+    return `<div style="border-radius:999px;padding:10px 8px;${styles[type]}font-size:12px;color:#002B5C;line-height:1.3;box-shadow:0 4px 10px rgba(0,0,0,.08);text-align:center;">${pos}<br><strong style="font-size:13px;">${cap ? capBadge() : ''}${name || pos}</strong></div>`;
+  }
+
+  // Wraps a row of pills in the correct fcd-line div
+  function lineDiv(cls, pills) {
+    return `<div class="fcd-line ${cls}">${pills.join('')}</div>`;
+  }
+
+  function tagStyle(pos) {
+    return { GK:'background:#dbeafe;color:#1e40af;', DF:'background:#f3f4f6;color:#374151;', MF:'background:#fef3c7;color:#92400e;', FW:'background:#fee2e2;color:#991b1b;' }[pos] || '';
+  }
+
+  // ── Formation layout builders ─────────────────────────────────
+  // Only one captain badge renders even if multiple boxes checked
+  function getCapId(formationKey) {
+    const checks = document.querySelectorAll(`#f-${formationKey} .cap-check`);
+    for (const cb of checks) { if (cb.checked) return cb.id; }
+    return null;
+  }
+
+  function build3412() {
+    const cap = getCapId('3412');
+    return [
+      lineDiv('fcd-attack',  [pill('ST',v('3412-st1'),'attack',false), pill('ST',v('3412-st2'),'attack',false)]),
+      lineDiv('fcd-camline', [pill('CAM',v('3412-cam'),'cam',false)]),
+      lineDiv('fcd-mid',     [
+        pill('LWB',v('3412-lwb'),'mid',false),
+        pill('CM', v('3412-cm1'),'mid', cap==='3412-cm1-cap'),
+        pill('CM', v('3412-cm2'),'mid', cap==='3412-cm2-cap'),
+        pill('RWB',v('3412-rwb'),'mid', cap==='3412-rwb-cap'),
+      ]),
+      lineDiv('fcd-defline', [
+        pill('LCB',v('3412-lcb'),'def',false),
+        pill('CB', v('3412-cb'), 'def', cap==='3412-cb-cap'),
+        pill('RCB',v('3412-rcb'),'def', cap==='3412-rcb-cap'),
+      ]),
+      lineDiv('fcd-gkline',  [pill('GK',v('3412-gk'),'gk',false)]),
+    ].join('\n      ');
+  }
+
+  function build343() {
+    const cap = getCapId('343');
+    return [
+      lineDiv('fcd-attack',  [pill('LW',v('343-lw'),'attack',false), pill('ST',v('343-st'),'attack',false), pill('RW',v('343-rw'),'attack',false)]),
+      lineDiv('fcd-mid',     [
+        pill('LWB',v('343-lwb'),'mid',false),
+        pill('CM', v('343-cm1'),'mid', cap==='343-cm1-cap'),
+        pill('CM', v('343-cm2'),'mid', cap==='343-cm2-cap'),
+        pill('RWB',v('343-rwb'),'mid', cap==='343-rwb-cap'),
+      ]),
+      lineDiv('fcd-defline', [
+        pill('LCB',v('343-lcb'),'def',false),
+        pill('CB', v('343-cb'), 'def', cap==='343-cb-cap'),
+        pill('RCB',v('343-rcb'),'def', cap==='343-rcb-cap'),
+      ]),
+      lineDiv('fcd-gkline',  [pill('GK',v('343-gk'),'gk',false)]),
+    ].join('\n      ');
+  }
+
+  function build442() {
+    const cap = getCapId('442');
+    return [
+      lineDiv('fcd-attack',  [pill('ST',v('442-st1'),'attack',false), pill('ST',v('442-st2'),'attack',false)]),
+      lineDiv('fcd-mid',     [
+        pill('LM', v('442-lm'), 'mid',false),
+        pill('CM', v('442-cm1'),'mid', cap==='442-cm1-cap'),
+        pill('CM', v('442-cm2'),'mid', cap==='442-cm2-cap'),
+        pill('RM', v('442-rm'), 'mid',false),
+      ]),
+      lineDiv('fcd-mid fcd-defline-4', [
+        pill('LB', v('442-lb'), 'def',false),
+        pill('LCB',v('442-lcb'),'def', cap==='442-lcb-cap'),
+        pill('RCB',v('442-rcb'),'def', cap==='442-rcb-cap'),
+        pill('RB', v('442-rb'), 'def', cap==='442-rb-cap'),
+      ]),
+      lineDiv('fcd-gkline',  [pill('GK',v('442-gk'),'gk',false)]),
+    ].join('\n      ');
+  }
+
+  function build4231() {
+    const cap = getCapId('4231');
+    return [
+      lineDiv('fcd-camline', [pill('ST',v('4231-st'),'attack',false)]),
+      lineDiv('fcd-attack',  [pill('LAM',v('4231-lam'),'cam',false), pill('CAM',v('4231-cam'),'cam',false), pill('RAM',v('4231-ram'),'cam',false)]),
+      lineDiv('fcd-camline fcd-pivot', [
+        pill('DM',v('4231-dm1'),'mid', cap==='4231-dm1-cap'),
+        pill('DM',v('4231-dm2'),'mid', cap==='4231-dm2-cap'),
+      ]),
+      lineDiv('fcd-mid fcd-defline-4', [
+        pill('LB', v('4231-lb'), 'def',false),
+        pill('LCB',v('4231-lcb'),'def', cap==='4231-lcb-cap'),
+        pill('RCB',v('4231-rcb'),'def', cap==='4231-rcb-cap'),
+        pill('RB', v('4231-rb'), 'def', cap==='4231-rb-cap'),
+      ]),
+      lineDiv('fcd-gkline',  [pill('GK',v('4231-gk'),'gk',false)]),
+    ].join('\n      ');
+  }
+
+  // ── Extra CSS needed for 4-wide defense rows ──────────────────
+  const extraCSS = `
+    .fcd-defline-4{ grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
+    .fcd-pivot{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    @media (max-width:720px){
+      .fcd-defline-4{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+      .fcd-pivot{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    }`;
+
+  // ── Main generate ─────────────────────────────────────────────
+  function generate() {
+    const fKey      = document.getElementById('formation').value;
+    const fLabel    = document.getElementById('formation').selectedOptions[0].text;
+    const status    = v('status') || 'Projected lineup · subject to change';
+
+    const builders  = { '3412': build3412, '343': build343, '442': build442, '4231': build4231 };
+    const rows      = builders[fKey]();
+
+    const lineupHTML =
+`<!-- FC Dallas Starting XI -->
+<section style="max-width:820px;margin:28px auto;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px;">
+    <h3 style="margin:0;font-size:22px;color:#002B5C;">Starting XI</h3>
+    <span style="font-size:13px;color:#C8102E;font-weight:600;">Formation: ${fLabel}</span>
+  </div>
+  <div style="border:2px solid #002B5C;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#ffffff,#f8fafc);">
+    <div style="padding:22px;">
+      ${rows}
+    </div>
+  </div>
+  <p style="text-align:center;font-size:11px;color:#888;margin:8px 0 0;">${status}</p>
+  <style>${extraCSS}</style>
+
+</section>`;
+
+```
+// Bench
+const benchPlayers = BENCH_SLOTS
+  .map(p => ({ name: v(p.id), pos: v(p.id + '_pos') }))
+  .filter(p => p.name);
+
+const benchItems = benchPlayers.map(p => {
+  const isGK = p.pos === 'GK';
+  const rowStyle = isGK
+    ? 'border:2px solid #444;background:#f2f2f2;'
+    : 'border:1px solid rgba(0,43,92,.16);background:linear-gradient(180deg,#ffffff,#f9fbff);box-shadow:0 3px 10px rgba(0,0,0,.06);';
+  return `<li style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:14px;color:#002B5C;${rowStyle}"><span style="font-size:14px;font-weight:700;">${p.name}</span><span style="font-size:12px;padding:4px 10px;border-radius:999px;font-weight:700;${tagStyle(p.pos)}">${p.pos}</span></li>`;
+}).join('\n        ');
+
+const benchHTML = benchPlayers.length === 0
+  ? '<!-- No bench players entered -->'
+  : `<!-- FC Dallas Bench -->
+```
+
+<section style="max-width:820px;margin:28px auto;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;">
+  <div style="margin-bottom:12px;">
+    <h3 style="margin:0;font-size:22px;color:#002B5C;">Bench</h3>
+  </div>
+  <div style="border:2px solid #002B5C;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#ffffff,#f8fafc);">
+    <div style="padding:18px;">
+      <ul style="list-style:none;margin:0;padding:0;display:grid;gap:10px;">
+        ${benchItems}
+      </ul>
+    </div>
+  </div>
+</section>`;
+
+```
+document.getElementById('lineup-output').value = lineupHTML;
+document.getElementById('bench-output').value = benchHTML;
+
+const out = document.getElementById('output-section');
+out.style.display = 'block';
+document.getElementById('success-banner').style.display = 'block';
+out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+```
+
+}
+
+// ── Copy ──────────────────────────────────────────────────────
+function copyBlock(id, btn) {
+const ta = document.getElementById(id);
+if (navigator.clipboard) {
+navigator.clipboard.writeText(ta.value).then(() => {
+btn.textContent = ‘✓ Copied!’;
+btn.classList.add(‘copied’);
+setTimeout(() => { btn.textContent = ‘Copy HTML’; btn.classList.remove(‘copied’); }, 2000);
+});
+} else {
+ta.select();
+document.execCommand(‘copy’);
+btn.textContent = ‘✓ Copied!’;
+setTimeout(() => { btn.textContent = ‘Copy HTML’; }, 2000);
+}
+}
+</script>
+
+</body>
+</html>
