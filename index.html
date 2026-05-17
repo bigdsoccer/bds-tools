@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -9,64 +8,64 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-font-family: Georgia, serif;
-background: #f4f7fb;
-color: #1a2a3a;
-min-height: 100vh;
-padding: 24px 16px 60px;
+  font-family: Georgia, serif;
+  background: #f4f7fb;
+  color: #1a2a3a;
+  min-height: 100vh;
+  padding: 24px 16px 60px;
 }
 
 header { text-align: center; margin-bottom: 32px; }
 
 .logo {
-font-size: 11px;
-font-weight: 700;
-letter-spacing: 3px;
-text-transform: uppercase;
-color: #C8102E;
-margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #C8102E;
+  margin-bottom: 6px;
 }
 
 h1 {
-font-size: 26px;
-color: #002B5C;
-font-weight: 700;
-letter-spacing: -0.5px;
+  font-size: 26px;
+  color: #002B5C;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 header p {
-font-size: 13px;
-color: #6b7f96;
-margin-top: 4px;
-font-style: italic;
+  font-size: 13px;
+  color: #6b7f96;
+  margin-top: 4px;
+  font-style: italic;
 }
 
 .card {
-background: #ffffff;
-border: 1.5px solid #d0d9e8;
-border-radius: 16px;
-padding: 24px;
-margin-bottom: 20px;
-max-width: 680px;
-margin-left: auto;
-margin-right: auto;
+  background: #ffffff;
+  border: 1.5px solid #d0d9e8;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card-title {
-font-size: 13px;
-font-weight: 700;
-letter-spacing: 2px;
-text-transform: uppercase;
-color: #C8102E;
-margin-bottom: 18px;
-padding-bottom: 10px;
-border-bottom: 1px solid #d0d9e8;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #C8102E;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d0d9e8;
 }
 
 .field-row {
-display: grid;
-gap: 12px;
-margin-bottom: 12px;
+  display: grid;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .cols-1 { grid-template-columns: 1fr; }
@@ -75,191 +74,190 @@ margin-bottom: 12px;
 .cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 
 .field-group {
-display: flex;
-flex-direction: column;
-gap: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 label {
-font-size: 10px;
-font-weight: 700;
-letter-spacing: 1.5px;
-text-transform: uppercase;
-color: #6b7f96;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #6b7f96;
 }
 
-input[type=“text”], select {
-width: 100%;
-padding: 9px 12px;
-border: 1.5px solid #d0d9e8;
-border-radius: 8px;
-font-size: 14px;
-font-family: Georgia, serif;
-color: #1a2a3a;
-background: #fafbfd;
--webkit-appearance: none;
+input[type="text"], select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1.5px solid #d0d9e8;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: Georgia, serif;
+  color: #1a2a3a;
+  background: #fafbfd;
+  -webkit-appearance: none;
 }
 
-input[type=“text”]:focus, select:focus {
-outline: none;
-border-color: #002B5C;
-background: #ffffff;
+input[type="text"]:focus, select:focus {
+  outline: none;
+  border-color: #002B5C;
+  background: #ffffff;
 }
 
 .section-divider {
-font-size: 11px;
-font-weight: 700;
-letter-spacing: 2px;
-text-transform: uppercase;
-color: #002B5C;
-margin: 20px 0 12px;
-display: flex;
-align-items: center;
-gap: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #002B5C;
+  margin: 20px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .section-divider::after {
-content: ‘’;
-flex: 1;
-height: 1px;
-background: #d0d9e8;
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #d0d9e8;
 }
 
 .formation-section { display: none; }
 .formation-section.active { display: block; }
 
 .captain-toggle {
-display: flex;
-align-items: center;
-gap: 6px;
-margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
 }
 
-.captain-toggle input[type=“checkbox”] {
-width: 15px;
-height: 15px;
-cursor: pointer;
-flex-shrink: 0;
-accent-color: #C8102E;
+.captain-toggle input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: #C8102E;
 }
 
 .captain-toggle label {
-font-size: 10px;
-color: #6b7f96;
-cursor: pointer;
-letter-spacing: 0.5px;
-text-transform: none;
-font-weight: 600;
+  font-size: 10px;
+  color: #6b7f96;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  font-weight: 600;
 }
 
 .bench-row {
-display: grid;
-grid-template-columns: 1fr 72px;
-gap: 10px;
-align-items: end;
-margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 1fr 72px;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 10px;
 }
 
 .btn-generate {
-display: block;
-width: 100%;
-max-width: 680px;
-margin: 0 auto 20px;
-padding: 16px;
-background: #002B5C;
-color: #ffffff;
-font-size: 14px;
-font-weight: 700;
-letter-spacing: 1.5px;
-text-transform: uppercase;
-border: none;
-border-radius: 12px;
-cursor: pointer;
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto 20px;
+  padding: 16px;
+  background: #002B5C;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
 .btn-generate:active { background: #001f45; }
 
 .output-section {
-max-width: 680px;
-margin: 0 auto;
-display: none;
+  max-width: 680px;
+  margin: 0 auto;
+  display: none;
 }
 
 .output-block {
-background: #ffffff;
-border: 1.5px solid #d0d9e8;
-border-radius: 16px;
-padding: 20px;
-margin-bottom: 16px;
+  background: #ffffff;
+  border: 1.5px solid #d0d9e8;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
 }
 
 .output-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
 
 .output-label {
-font-size: 11px;
-font-weight: 700;
-letter-spacing: 2px;
-text-transform: uppercase;
-color: #002B5C;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #002B5C;
 }
 
 .btn-copy {
-padding: 7px 16px;
-background: #C8102E;
-color: #ffffff;
-border: none;
-border-radius: 8px;
-font-size: 12px;
-font-weight: 700;
-letter-spacing: 0.5px;
-cursor: pointer;
+  padding: 7px 16px;
+  background: #C8102E;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
 }
 
 .btn-copy:active { background: #a50d26; }
 .btn-copy.copied { background: #16a34a; }
 
 textarea.code-output {
-width: 100%;
-height: 160px;
-font-family: Menlo, Monaco, monospace;
-font-size: 11px;
-line-height: 1.5;
-color: #334155;
-background: #f8fafc;
-border: 1px solid #d0d9e8;
-border-radius: 8px;
-padding: 12px;
-resize: vertical;
--webkit-appearance: none;
+  width: 100%;
+  height: 160px;
+  font-family: Menlo, Monaco, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #334155;
+  background: #f8fafc;
+  border: 1px solid #d0d9e8;
+  border-radius: 8px;
+  padding: 12px;
+  resize: vertical;
+  -webkit-appearance: none;
 }
 
 .success-banner {
-background: #f0fdf4;
-border: 1.5px solid #86efac;
-border-radius: 10px;
-padding: 12px 16px;
-font-size: 13px;
-color: #16a34a;
-font-weight: 600;
-text-align: center;
-margin-bottom: 16px;
-max-width: 680px;
-margin-left: auto;
-margin-right: auto;
-display: none;
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #16a34a;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 16px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  display: none;
 }
 
 @media (max-width: 520px) {
-.cols-4 { grid-template-columns: 1fr 1fr; }
-.cols-3 { grid-template-columns: 1fr 1fr; }
+  .cols-4 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr; }
 }
 </style>
-
 </head>
 <body>
 
@@ -270,7 +268,6 @@ display: none;
 </header>
 
 <!-- MATCH INFO -->
-
 <div class="card">
   <div class="card-title">Match Info</div>
   <div class="field-row cols-2">
@@ -291,12 +288,10 @@ display: none;
 </div>
 
 <!-- STARTING XI -->
-
 <div class="card">
   <div class="card-title">Starting XI</div>
 
   <!-- 3-4-1-2 -->
-
   <div class="formation-section active" id="f-3412">
     <div class="section-divider">Strikers</div>
     <div class="field-row cols-2">
@@ -327,7 +322,6 @@ display: none;
   </div>
 
   <!-- 3-4-3 -->
-
   <div class="formation-section" id="f-343">
     <div class="section-divider">Attack</div>
     <div class="field-row cols-3">
@@ -355,7 +349,6 @@ display: none;
   </div>
 
   <!-- 4-4-2 -->
-
   <div class="formation-section" id="f-442">
     <div class="section-divider">Strikers</div>
     <div class="field-row cols-2">
@@ -383,7 +376,6 @@ display: none;
   </div>
 
   <!-- 4-2-3-1 -->
-
   <div class="formation-section" id="f-4231">
     <div class="section-divider">Striker</div>
     <div class="field-row cols-1">
@@ -416,7 +408,6 @@ display: none;
 </div>
 
 <!-- BENCH — hardcoded in HTML, no JS needed -->
-
 <div class="card">
   <div class="card-title">Bench (up to 9)</div>
 
@@ -584,60 +575,56 @@ function generate() {
     '  </div>\n' +
     '  <p style="text-align:center;font-size:11px;color:#888;margin:8px 0 0;">' + status + '</p>\n' +
     '  <style>' + extraCSS + '</style>\n' +
+    '</section>';
 
-```
-'</section>';
-```
+  var benchPlayers = [];
+  var ids = ['b1','b2','b3','b4','b5','b6','b7','b8','b9'];
+  for (var i = 0; i < ids.length; i++) {
+    var name = v(ids[i]);
+    var pos  = v(ids[i] + '_pos');
+    if (name) benchPlayers.push({ name: name, pos: pos });
+  }
 
-var benchPlayers = [];
-var ids = [‘b1’,‘b2’,‘b3’,‘b4’,‘b5’,‘b6’,‘b7’,‘b8’,‘b9’];
-for (var i = 0; i < ids.length; i++) {
-var name = v(ids[i]);
-var pos  = v(ids[i] + ‘_pos’);
-if (name) benchPlayers.push({ name: name, pos: pos });
-}
+  var benchHTML = '<!-- No bench players entered -->';
+  if (benchPlayers.length > 0) {
+    var items = '';
+    for (var j = 0; j < benchPlayers.length; j++) {
+      var p = benchPlayers[j];
+      var ts = { GK:'background:#dbeafe;color:#1e40af;', DF:'background:#f3f4f6;color:#374151;', MF:'background:#fef3c7;color:#92400e;', FW:'background:#fee2e2;color:#991b1b;' };
+      var rowStyle = p.pos === 'GK'
+        ? 'border:2px solid #444;background:#f2f2f2;'
+        : 'border:1px solid rgba(0,43,92,.16);background:linear-gradient(180deg,#ffffff,#f9fbff);box-shadow:0 3px 10px rgba(0,0,0,.06);';
+      items += '<li style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:14px;color:#002B5C;' + rowStyle + '"><span style="font-size:14px;font-weight:700;">' + p.name + '</span><span style="font-size:12px;padding:4px 10px;border-radius:999px;font-weight:700;' + (ts[p.pos] || '') + '">' + p.pos + '</span></li>\n';
+    }
+    benchHTML =
+      '<!-- FC Dallas Bench -->\n' +
+      '<section style="max-width:820px;margin:28px auto;font-family:system-ui,-apple-system,Arial,sans-serif;">\n' +
+      '  <div style="margin-bottom:12px;"><h3 style="margin:0;font-size:22px;color:#002B5C;">Bench</h3></div>\n' +
+      '  <div style="border:2px solid #002B5C;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#ffffff,#f8fafc);">\n' +
+      '    <div style="padding:18px;"><ul style="list-style:none;margin:0;padding:0;display:grid;gap:10px;">' + items + '</ul></div>\n' +
+      '  </div>\n' +
+      '</section>';
+  }
 
-var benchHTML = ‘<!-- No bench players entered -->’;
-if (benchPlayers.length > 0) {
-var items = ‘’;
-for (var j = 0; j < benchPlayers.length; j++) {
-var p = benchPlayers[j];
-var ts = { GK:‘background:#dbeafe;color:#1e40af;’, DF:‘background:#f3f4f6;color:#374151;’, MF:‘background:#fef3c7;color:#92400e;’, FW:‘background:#fee2e2;color:#991b1b;’ };
-var rowStyle = p.pos === ‘GK’
-? ‘border:2px solid #444;background:#f2f2f2;’
-: ‘border:1px solid rgba(0,43,92,.16);background:linear-gradient(180deg,#ffffff,#f9fbff);box-shadow:0 3px 10px rgba(0,0,0,.06);’;
-items += ‘<li style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:14px;color:#002B5C;' + rowStyle + '"><span style="font-size:14px;font-weight:700;">’ + p.name + ‘</span><span style="font-size:12px;padding:4px 10px;border-radius:999px;font-weight:700;' + (ts[p.pos] || '') + '">’ + p.pos + ‘</span></li>\n’;
-}
-benchHTML =
-‘<!-- FC Dallas Bench -->\n’ +
-‘<section style="max-width:820px;margin:28px auto;font-family:system-ui,-apple-system,Arial,sans-serif;">\n’ +
-’  <div style="margin-bottom:12px;"><h3 style="margin:0;font-size:22px;color:#002B5C;">Bench</h3></div>\n’ +
-’  <div style="border:2px solid #002B5C;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#ffffff,#f8fafc);">\n’ +
-’    <div style="padding:18px;"><ul style="list-style:none;margin:0;padding:0;display:grid;gap:10px;">’ + items + ‘</ul></div>\n’ +
-’  </div>\n’ +
-‘</section>’;
-}
-
-document.getElementById(‘lineup-output’).value = lineupHTML;
-document.getElementById(‘bench-output’).value  = benchHTML;
-document.getElementById(‘output-section’).style.display = ‘block’;
-document.getElementById(‘success-banner’).style.display = ‘block’;
-document.getElementById(‘output-section’).scrollIntoView({ behavior: ‘smooth’, block: ‘start’ });
+  document.getElementById('lineup-output').value = lineupHTML;
+  document.getElementById('bench-output').value  = benchHTML;
+  document.getElementById('output-section').style.display = 'block';
+  document.getElementById('success-banner').style.display = 'block';
+  try { document.getElementById('output-section').scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(e) {}
 }
 
 function copyBlock(id, btn) {
-var ta = document.getElementById(id);
-ta.select();
-try {
-document.execCommand(‘copy’);
-btn.textContent = ‘Copied!’;
-btn.classList.add(‘copied’);
-setTimeout(function() { btn.textContent = ‘Copy HTML’; btn.classList.remove(‘copied’); }, 2000);
-} catch(e) {
-alert(‘Copy failed - please select and copy manually’);
-}
+  var ta = document.getElementById(id);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy HTML'; btn.classList.remove('copied'); }, 2000);
+  } catch(e) {
+    alert('Copy failed - please select and copy manually');
+  }
 }
 </script>
-
 </body>
 </html>
